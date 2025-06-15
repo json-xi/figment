@@ -5,9 +5,10 @@ import styled from 'styled-components';
 import Tools from './tools';
 import DotBackGround from './compoents/dotBackGroup';
 const Container = styled.div`
+  position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(240, 242, 245, 1);
+  /* background-color: rgba(240, 242, 245, 1); */
 `;
 
 const App = () => {
@@ -15,6 +16,8 @@ const App = () => {
   const [activeType, setActiveTypeType] = useState();
 
   function activeTypeChange(activeType) {
+    console.log('activeTy', activeType);
+
     setActiveTypeType(activeType);
   }
   useEffect(() => {
@@ -28,8 +31,8 @@ const App = () => {
   return (
     <Container>
       {/* <Drawer activeType={activeType}></Drawer> */}
-      <Tools activeType={activeType}></Tools>
-      <DotBackGround activeType={activeType}></DotBackGround>
+      <Tools directive={activeType}></Tools>
+      <DotBackGround></DotBackGround>
     </Container>
   );
 };
