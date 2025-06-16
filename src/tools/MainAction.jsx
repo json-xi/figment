@@ -3,6 +3,7 @@ import { Flex } from 'antd';
 import Geometry from './Geometry';
 import Note from './Note';
 import Brush from './Brush';
+import SplitLine from '@/components/SplitLine';
 
 const MainAction = (props) => {
   return (

@@ -3,7 +3,7 @@ import Drawer from '@/drawer';
 import { Flex, Button } from 'antd';
 import styled from 'styled-components';
 import Tools from './tools';
-import DotBackGround from './compoents/dotBackGroup';
+import DotBackGround from './components/dotBackGroup';
 const Container = styled.div`
   position: absolute;
   width: 100%;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex } from 'antd';
-import SelectHand from '@/compoents/SelectHand';
-import SelectCursor from '@/compoents/SelectCursor';
+import SelectHand from '@/components/SelectHand';
+import SelectCursor from '@/components/SelectCursor';
 import styled from 'styled-components';
 const SelectionContainer = styled.div`
   display: flex;

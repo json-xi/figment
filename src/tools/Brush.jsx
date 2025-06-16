@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import classnames from 'classnames';
 import BrushHoldLightSVG from '@/assets/tools-brush-light-hold.svg?react';
 import BrushLightSVG from '@/assets/tools-brush-light.svg?react';
@@ -10,27 +10,39 @@ import BrushTapeSVG from '@/assets/tools-brush-tape.svg?react';
 import BrushErazeHoldSVG from '@/assets/tools-brush-eraser-hold.svg?react';
 import BrushErazeSVG from '@/assets/tools-brush-eraser.svg?react';
 import { Flex } from 'antd';
-const BrushContainer = styled.div`
-  position: relative;
+
+const ActionBox = styled.div`
   width: 72px;
   height: 80px;
-  /* overflow: hidden; */
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 40px;
-    width: 100%;
-    background: white; /* 背景色与容器一致 */
+  box-sizing: content-box;
+  position: relative;
+  ${(props) => {
+    return props.$current
+      ? css`
+          background-color: #0000000f;
+        `
+      : null;
+  }}
+  &:hover {
+    background-color: #0000000f;
   }
-  &.brush:hover {
-    background-color: #f5f5f5;
-    & svg {
-      transition: all 0.2;
-      transform: translateY(-26px);
-      /* transform: scale(1.1); */
-    }
+`;
+const BrushContainer = styled.div`
+  position: absolute;
+  width: 72px;
+  height: 80px;
+  overflow: hidden;
+  transition: all 0.2;
+
+  &:hover {
+    ${(props) => {
+      return !props.$current
+        ? css`
+            top: -34px;
+            height: 114px;
+          `
+        : null;
+    }}
   }
 `;
 const Brush = ({ directive }) => {
@@ -55,17 +67,20 @@ const Brush = ({ directive }) => {
     }
   };
   return (
-    <BrushContainer
-      className={classnames('brush')}
-      onClick={() => {
-        __EE__.emit('activeTypeChange', 'brush');
-      }}
-    >
-      <Flex align="center" justify="center">
-        {getBrush()}
-      </Flex>
-      {/* <SubBrushMenu setCurrentBrush={setCurrentBrush} directive={directive}></SubBrushMenu> */}
-    </BrushContainer>
+    <ActionBox $current={directive === 'brush'}>
+      <BrushContainer
+        $current={directive === 'brush'}
+        className={classnames('brush')}
+        onClick={() => {
+          __EE__.emit('activeTypeChange', 'brush');
+        }}
+      >
+        <Flex align="center" justify="center">
+          {getBrush()}
+        </Flex>
+        {/* <SubBrushMenu setCurrentBrush={setCurrentBrush} directive={directive}></SubBrushMenu> */}
+      </BrushContainer>
+    </ActionBox>
   );
 };
 

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button, Flex } from 'antd';
 import SelectionHandle from './SelectionHandle';
 import MainAction from './MainAction';
-import SplitLine from '@/compoents/SplitLine';
+import SplitLine from '@/components/SplitLine';
 
 const ToolsBox = styled.div`
   position: absolute;
@@ -28,8 +28,9 @@ export default function Tools(props) {
     <ToolsBox>
       <Flex>
         <SelectionHandle directive={props.directive} />
-        <SplitLine></SplitLine>
+        <SplitLine />
         <MainAction directive={props.directive}></MainAction>
+        <SplitLine />
       </Flex>
     </ToolsBox>
   );
