@@ -10,12 +10,12 @@ import BrushTapeSVG from '@/assets/tools-brush-tape.svg?react';
 import BrushErazeHoldSVG from '@/assets/tools-brush-eraser-hold.svg?react';
 import BrushErazeSVG from '@/assets/tools-brush-eraser.svg?react';
 import { Flex } from 'antd';
-
 const ActionBox = styled.div`
   width: 72px;
   height: 80px;
   box-sizing: content-box;
   position: relative;
+  z-index: 0;
   ${(props) => {
     return props.$current
       ? css`
@@ -32,7 +32,7 @@ const BrushContainer = styled.div`
   width: 72px;
   height: 80px;
   overflow: hidden;
-  transition: all 0.2;
+  /* transition: all 0.2s; */
 
   &:hover {
     ${(props) => {
@@ -78,7 +78,6 @@ const Brush = ({ directive }) => {
         <Flex align="center" justify="center">
           {getBrush()}
         </Flex>
-        {/* <SubBrushMenu setCurrentBrush={setCurrentBrush} directive={directive}></SubBrushMenu> */}
       </BrushContainer>
     </ActionBox>
   );

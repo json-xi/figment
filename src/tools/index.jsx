@@ -3,6 +3,8 @@ import { Button, Flex } from 'antd';
 import SelectionHandle from './SelectionHandle';
 import MainAction from './MainAction';
 import SplitLine from '@/components/SplitLine';
+import ImaeEditor from '@/tools/ImageEditor';
+import SubBrushMenu from '@/tools/SubBrushMenu.jsx';
 
 const ToolsBox = styled.div`
   position: absolute;
@@ -25,13 +27,17 @@ const ToolsBox = styled.div`
 
 export default function Tools(props) {
   return (
-    <ToolsBox>
-      <Flex>
-        <SelectionHandle directive={props.directive} />
-        <SplitLine />
-        <MainAction directive={props.directive}></MainAction>
-        <SplitLine />
-      </Flex>
-    </ToolsBox>
+    <>
+      <ToolsBox>
+        <Flex>
+          <SelectionHandle directive={props.directive} />
+          <SplitLine />
+          <MainAction directive={props.directive}></MainAction>
+          <SplitLine />
+          <ImaeEditor directive={props.directive} />
+        </Flex>
+      </ToolsBox>
+      {props.directive === 'brush' && <SubBrushMenu directive={props.directive}></SubBrushMenu>}
+    </>
   );
 }

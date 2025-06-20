@@ -31,8 +31,8 @@ const App = () => {
   return (
     <Container>
       {/* <Drawer activeType={activeType}></Drawer> */}
-      <Tools directive={activeType}></Tools>
       <DotBackGround></DotBackGround>
+      <Tools directive={activeType}></Tools>
     </Container>
   );
 };
