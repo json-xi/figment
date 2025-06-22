@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import classnames from 'classnames';
-import BrushHoldLightSVG from '@/assets/tools-brush-light-hold.svg?react';
 import BrushLightSVG from '@/assets/tools-brush-light.svg?react';
 import BrushPencilSVG from '@/assets/tools-brush-pencil.svg?react';
-import BrushPencilHoldSVG from '@/assets/tools-brush-pencil-hold.svg?react';
-import BrushTapeHoldSVG from '@/assets/tools-brush-tape-hold.svg?react';
-import BrushTapeSVG from '@/assets/tools-brush-tape.svg?react';
-import BrushErazeHoldSVG from '@/assets/tools-brush-eraser-hold.svg?react';
-import BrushErazeSVG from '@/assets/tools-brush-eraser.svg?react';
 import { Flex } from 'antd';
 const ActionBox = styled.div`
   width: 72px;
@@ -44,35 +38,54 @@ const BrushContainer = styled.div`
         : null;
     }}
   }
+  ${(props) => {
+    if (props.$directive === 'light') {
+      return css`
+        transform: translateY(-20px);
+        height: 100px;
+      `;
+    }
+  }}
+`;
+const Tape = styled.div`
+  width: 62px;
+  height: 180px;
+  background-image: url('/src/assets/tape.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+`;
+const Eraser = styled.div`
+  width: 60px;
+  height: 136px;
+  background-image: url('/src/assets/muti-image.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: -8px 0;
 `;
 const Brush = ({ directive }) => {
-  const [currentBrush, setCurrentBrush] = useState('pencil');
-
   const getBrush = () => {
-    switch (currentBrush) {
+    switch (directive) {
       case 'pencil':
-        return directive === 'brush' ? (
-          <BrushPencilHoldSVG width="42" height="136" />
-        ) : (
-          <BrushPencilSVG width="42" height="136" />
-        );
+        return <BrushPencilSVG width="42" height="136" />;
       case 'light':
-        return directive === 'brush' ? <BrushHoldLightSVG /> : <BrushLightSVG />;
-      case 'tap':
-        return directive === 'brush' ? <BrushTapeHoldSVG /> : <BrushTapeSVG />;
-      case 'erazer':
-        return directive === 'brush' ? <BrushErazeHoldSVG /> : <BrushErazeSVG />;
+        return <BrushLightSVG width="42" height="136" />;
+      case 'tape':
+        return <Tape />;
+      case 'eraser':
+        return <Eraser />;
       default:
-        break;
+        return <BrushPencilSVG width="42" height="136" />;
     }
   };
   return (
-    <ActionBox $current={directive === 'brush'}>
+    <ActionBox $current={['pencil', 'light', 'tape', 'eraser'].includes(directive)}>
       <BrushContainer
-        $current={directive === 'brush'}
+        $current={['pencil', 'light', 'tape', 'eraser'].includes(directive)}
+        $directive={directive}
         className={classnames('brush')}
         onClick={() => {
-          __EE__.emit('activeTypeChange', 'brush');
+          !['pencil', 'light', 'tape', 'eraser'].includes(directive) &&
+            __EE__.emit('activeTypeChange', 'pencil');
         }}
       >
         <Flex align="center" justify="center">

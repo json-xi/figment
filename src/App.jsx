@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import Drawer from '@/drawer';
-import { Flex, Button } from 'antd';
 import styled from 'styled-components';
 import Tools from './tools';
 import DotBackGround from './components/dotBackGroup';
+import SubBrushMenu from '@/tools/SubBrushMenu.jsx';
+
 const Container = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  /* background-color: rgba(240, 242, 245, 1); */
+  z-index: 1;
 `;
-
+const aBrushType = ['pencil', 'light', 'tape', 'eraser'];
 const App = () => {
-  const [brushType, setBrushType] = useState();
-  const [activeType, setActiveTypeType] = useState();
+  const [activeType, setActiveTypeType] = useState('selection');
 
   function activeTypeChange(activeType) {
     console.log('activeTy', activeType);
@@ -22,17 +22,17 @@ const App = () => {
   }
   useEffect(() => {
     __EE__.on('activeTypeChange', activeTypeChange);
-    return () => {};
+    return () => {
+      __EE__.removeListener('activeTypeChange', activeTypeChange);
+    };
   }, []);
 
-  const onChangeBrush = (type) => {
-    setBrushType(type);
-  };
   return (
     <Container>
-      {/* <Drawer activeType={activeType}></Drawer> */}
       <DotBackGround></DotBackGround>
+      <Drawer directive={activeType}></Drawer>
       <Tools directive={activeType}></Tools>
+      {aBrushType.includes(activeType) && <SubBrushMenu directive={activeType}></SubBrushMenu>}
     </Container>
   );
 };

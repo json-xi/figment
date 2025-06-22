@@ -4,7 +4,6 @@ import SelectionHandle from './SelectionHandle';
 import MainAction from './MainAction';
 import SplitLine from '@/components/SplitLine';
 import ImaeEditor from '@/tools/ImageEditor';
-import SubBrushMenu from '@/tools/SubBrushMenu.jsx';
 
 const ToolsBox = styled.div`
   position: absolute;
@@ -37,7 +36,6 @@ export default function Tools(props) {
           <ImaeEditor directive={props.directive} />
         </Flex>
       </ToolsBox>
-      {props.directive === 'brush' && <SubBrushMenu directive={props.directive}></SubBrushMenu>}
     </>
   );
 }

@@ -48,11 +48,7 @@ const DotBackground = () => {
     };
   }, []);
 
-  return (
-    <BackGroundContainer>
-      <canvas ref={canvasRef} />
-    </BackGroundContainer>
-  );
+  return <BackGroundContainer>{<canvas ref={canvasRef} />}</BackGroundContainer>;
 };
 
 export default DotBackground;
