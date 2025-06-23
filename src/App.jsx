@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Tools from './tools';
 import DotBackGround from './components/dotBackGroup';
 import SubBrushMenu from '@/tools/SubBrushMenu.jsx';
-
+import ImageEditMenu from '@/tools/ImageEditMenu.jsx';
 const Container = styled.div`
   position: absolute;
   width: 100%;
@@ -33,6 +33,7 @@ const App = () => {
       <Drawer directive={activeType}></Drawer>
       <Tools directive={activeType}></Tools>
       {aBrushType.includes(activeType) && <SubBrushMenu directive={activeType}></SubBrushMenu>}
+      {activeType === 'imageEdit' && <ImageEditMenu directive={activeType}></ImageEditMenu>}
     </Container>
   );
 };

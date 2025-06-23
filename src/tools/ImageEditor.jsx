@@ -31,9 +31,10 @@ const props = {
   showUploadList: false,
   beforeUpload: (file) => {
     if (file) {
+      debugger;
       const reader = new FileReader();
       reader.onload = (e) => {
-        __EE__.emit('_fabric_add_image_', e.target.result);
+        __EE__.emit('_fabric_add_image', e.target.result);
       };
       reader.readAsDataURL(file);
     }
@@ -43,7 +44,12 @@ const props = {
 const ImaeEditor = () => {
   return (
     <Container>
-      <img src="/src/assets/image (1).png" />
+      <img
+        onClick={() => {
+          __EE__.emit('activeTypeChange', 'imageEdit');
+        }}
+        src="/src/assets/image (1).png"
+      />
       <AddContainer>
         <Upload {...props}>
           <Add />

@@ -1,4 +1,4 @@
-import tapeImage from '@/assets/image (1).png';
+import tapeImage from '@/assets/tap-pattern.png';
 export default function getTapeBrush(canvas) {
   const tapeBrush = new fabric.PatternBrush(canvas);
 
@@ -12,5 +12,7 @@ export default function getTapeBrush(canvas) {
 
   tapeBrush.source = getSource();
   tapeBrush.width = 20;
+  tapeBrush.strokeLineCap = 'square';
+  tapeBrush.strokeLineJoin = 'round';
   return tapeBrush;
 }

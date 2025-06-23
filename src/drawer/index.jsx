@@ -12,7 +12,35 @@ const ContainerCanvas = styled.div`
 `;
 const Drawer = ({ directive }) => {
   const canvasRef = useRef(null);
-  const [canvasIns, setCanvasIns] = useState(null);
+  const fabricRef = useRef(null);
+  // const [canvasIns, setCanvasIns] = useState(null);
+  // 添加图片
+  function addImage(imgUrl) {
+    fabric.Image.fromURL(imgUrl, (imgInstance) => {
+      // 缩放
+      // 等比缩放60%
+      const scale = 0.6;
+      imgInstance.scale(scale);
+      debugger;
+
+      // 画布中心
+      const canvasXCenter = fabricRef.current.width / 2;
+      const canvasYCenter = fabricRef.current.height / 2;
+      // 图片位置
+      const imgX = canvasXCenter - imgInstance.width / 2;
+      const imgY = canvasYCenter - imgInstance.height / 2;
+
+      imgInstance.set({
+        left: imgX,
+        top: imgY,
+        originX: 'left',
+        originY: 'top',
+      });
+      // 渲染
+      fabricRef.current.add(imgInstance);
+      fabricRef.current.renderAll();
+    });
+  }
   // 设置鼠标样式
   function setCanvasCursor(canvasIns, directive) {
     const cursorMap = {
@@ -40,21 +68,25 @@ const Drawer = ({ directive }) => {
       height: window.innerHeight,
     };
     const canvas = new fabric.Canvas(canvasRef.current, options);
-    setCanvasIns(canvas);
+    // setCanvasIns(canvas);
+    fabricRef.current = canvas;
     const resizeCanvas = () => {
       canvas.renderAll();
     };
     window.addEventListener('resize', resizeCanvas);
+    __EE__.on('_fabric_add_image', addImage);
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      __EE__.removeListener('_fabric_add_image', addImage);
       canvas.dispose();
     };
   }, []);
   useEffect(() => {
-    if (!canvasIns) return;
+    if (!fabricRef.current) return;
 
+    // 笔刷类
     if (['pencil', 'eraser', 'tape', 'light'].includes(directive)) {
-      canvasIns.isDrawingMode = true;
+      fabricRef.current.isDrawingMode = true;
       const oMapAction = {
         pencil: pencilBrushCanvas,
         eraser: eraserBrushCanvas,
@@ -63,13 +95,22 @@ const Drawer = ({ directive }) => {
       };
 
       oMapAction[directive] &&
-        (canvasIns.freeDrawingBrush = oMapAction[directive](canvasIns, { color: 'yellow' }));
+        (fabricRef.current.freeDrawingBrush = oMapAction[directive](fabricRef.current, {
+          color: 'yellow',
+        }));
     } else {
-      canvasIns.isDrawingMode = false;
+      fabricRef.current.isDrawingMode = false;
     }
-    setCanvasCursor(canvasIns, directive);
-    canvasIns.renderAll();
-  }, [directive, canvasIns]);
+
+    // 图片编辑类
+    if (['imageEraser', 'cropper', 'mirrorX', 'mirrorY']) {
+      // TODO
+    }
+
+    // 设置鼠标样式
+    setCanvasCursor(fabricRef.current, directive);
+    fabricRef.current.renderAll();
+  }, [directive, fabricRef.current]);
   return (
     <ContainerCanvas $current={directive}>
       <canvas ref={canvasRef} />
