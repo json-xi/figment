@@ -12,6 +12,7 @@ const Container = styled.div`
   z-index: 1;
 `;
 const aBrushType = ['pencil', 'light', 'tape', 'eraser'];
+const aImageEdit = ['imageEraser', 'cropper', 'mirrorX', 'mirrorY', 'imageEdit'];
 const App = () => {
   const [activeType, setActiveTypeType] = useState('selection');
 
@@ -33,7 +34,7 @@ const App = () => {
       <Drawer directive={activeType}></Drawer>
       <Tools directive={activeType}></Tools>
       {aBrushType.includes(activeType) && <SubBrushMenu directive={activeType}></SubBrushMenu>}
-      {activeType === 'imageEdit' && <ImageEditMenu directive={activeType}></ImageEditMenu>}
+      {aImageEdit.includes(activeType) && <ImageEditMenu directive={activeType}></ImageEditMenu>}
     </Container>
   );
 };

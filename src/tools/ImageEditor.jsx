@@ -31,7 +31,6 @@ const props = {
   showUploadList: false,
   beforeUpload: (file) => {
     if (file) {
-      debugger;
       const reader = new FileReader();
       reader.onload = (e) => {
         __EE__.emit('_fabric_add_image', e.target.result);
